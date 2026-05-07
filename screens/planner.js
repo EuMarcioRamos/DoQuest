@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View, FlatList} from 'react-native';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
-import Feather from '@expo/vector-icons/Feather';
-import BottomMenu from '../components/bottomMenu';
+import Feather from '@expo/vector-icons/Feather'; 
+import RoundedBottomMenu from '../components/RoundedBottomMenu';
 
 export default function Planner({navigation}){
     const [fontsLoaded] = useFonts ({
@@ -72,8 +72,10 @@ export default function Planner({navigation}){
                 </View>
             </View>
 
-            <BottomMenu
+            <RoundedBottomMenu
                 onHome={() => navigation.navigate('Dashboard')}
+                onNote={() => navigation.navigate('Planner')}
+                onUser={() => navigation.navigate('TasksWireframe')}
             />
 
         </View>

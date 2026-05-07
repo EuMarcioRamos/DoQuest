@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Pressable} from 'react-native'
 import Feather from '@expo/vector-icons/Feather';   
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
-import BottomMenu from '../components/bottomMenu';
+import RoundedBottomMenu from '../components/RoundedBottomMenu';
 
 
 export default function Dashboard({navigation}) {
@@ -72,9 +72,10 @@ export default function Dashboard({navigation}) {
                     </View>
                 </View>
             </View>
-            <BottomMenu
+            <RoundedBottomMenu  
                 onHome={() => console.log('home')}
                 onNote={() => navigation.navigate('Planner')}
+                onUser={() => navigation.navigate('TasksWireframe')}
             />
         </View>
 
