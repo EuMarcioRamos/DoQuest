@@ -1,9 +1,13 @@
-import {StyleSheet, Text, View, FlatList} from 'react-native';
+import {StyleSheet, Text, View, FlatList, Pressable} from 'react-native';
+import { useState } from 'react';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import Feather from '@expo/vector-icons/Feather'; 
 import RoundedBottomMenu from '../components/RoundedBottomMenu';
 
 export default function Planner({navigation}){
+
+    const[diaSelecionado, setDiaSelecionado] = useState(1);
+
     const [fontsLoaded] = useFonts ({
         Montserrat_400Regular,
         Montserrat_700Bold
@@ -45,12 +49,21 @@ export default function Planner({navigation}){
                     showsHorizontalScrollIndicator={false}
                     data={dias}
                     keyExtractor={(item) => item.toString()}
-                    renderItem={({item}) => (
-                        <View style={styles.cardData}>
-                            <Text style={styles.textDay}>DIA</Text>
-                            <Text style={styles.textData}>{item}</Text>
-                        </View>
-                    )}
+                    renderItem={({item}) => {
+
+                        const selecionado = item === diaSelecionado;
+
+                        return(
+                            <Pressable 
+                                onPress={() => setDiaSelecionado(item)}
+                                style={[styles.cardData, selecionado && styles.cardSelecionado]}
+                            >
+                                <Text style={[styles.textDay, selecionado && styles.textDaySelecionado]}>DIA</Text>
+                                <Text style={[styles.textData, selecionado && styles.textDataSelecionado]}>{item}</Text>
+                            </Pressable>
+                        )
+
+                    }}
                 />
             </View>
             <View style={styles.section}>
@@ -131,6 +144,10 @@ const styles = StyleSheet.create({
         borderRadius:40
     },
 
+    cardSelecionado: {
+        backgroundColor: '#E3700C'
+    },
+
     textDay: {
         fontFamily: 'Montserrat_700Bold',
         textAlign: 'center',
@@ -142,6 +159,19 @@ const styles = StyleSheet.create({
         fontSize: 40,
         color: '#E3700C',
         textAlign: 'center'
+    },
+
+    textDaySelecionado: {
+        fontFamily: 'Montserrat_700Bold',
+        color: '#FFF',
+        textAlign:'center',
+    },
+
+    textDataSelecionado: {
+        fontFamily: 'Montserrat_700Bold',
+        color: '#FFF',
+        textAlign:'center',
+        fontSize: 40
     },
 
     section:{
