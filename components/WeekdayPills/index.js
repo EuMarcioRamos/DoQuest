@@ -1,12 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { useFonts, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
+import SelectableButton from '../SelectableButton';
 
 export default function WeekdayPills({ selectedDay, onSelectDay }) {
-  const [fontsLoaded] = useFonts({
-    Montserrat_700Bold,
-  });
-
-  if (!fontsLoaded) return null;
 
   const weekDays = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
 
@@ -15,13 +10,14 @@ export default function WeekdayPills({ selectedDay, onSelectDay }) {
       {weekDays.map((label, index) => {
         const isSelected = selectedDay === index;
         return (
-          <Pressable
+          <SelectableButton
             key={`${label}-${index}`}
+            selected={isSelected}
             onPress={() => onSelectDay(index)}
-            style={[styles.pill, isSelected && styles.selectedPill]}
+            style={styles.pill}
           >
             <Text style={[styles.pillLabel, isSelected && styles.selectedPillLabel]}>{label}</Text>
-          </Pressable>
+          </SelectableButton>
         );
       })}
     </View>
@@ -38,7 +34,6 @@ const styles = StyleSheet.create({
     width: 38,
     height: 38,
     borderRadius: 14,
-    backgroundColor: '#E3700C',
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#82382E',
@@ -47,15 +42,13 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 4,
   },
-  selectedPill: {
-    backgroundColor: '#FFFFFF',
-  },
+  
   pillLabel: {
-    color: '#FFFFFF',
+    color: '#E3700C',
     fontFamily: 'Montserrat_700Bold',
     fontSize: 20,
   },
   selectedPillLabel: {
-    color: '#E3700C',
+    color: '#FFF',
   },
 });

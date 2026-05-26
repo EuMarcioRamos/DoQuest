@@ -1,16 +1,10 @@
 import { StyleSheet, Text, View, Pressable} from 'react-native'
 import Feather from '@expo/vector-icons/Feather';   
-import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
-import RoundedBottomMenu from '../components/RoundedBottomMenu';
+
 
 
 export default function Dashboard({navigation}) {
-    const [fontsLoaded] = useFonts({
-        Montserrat_400Regular,
-        Montserrat_700Bold
-    });
-
-    if (!fontsLoaded) return null;
+    
     return (
 
         <View style={styles.container}>
@@ -72,11 +66,6 @@ export default function Dashboard({navigation}) {
                     </View>
                 </View>
             </View>
-            <RoundedBottomMenu  
-                onHome={() => console.log('home')}
-                onNote={() => navigation.navigate('Planner')}
-                onUser={() => navigation.navigate('TasksWireframe')}
-            />
         </View>
 
     )
@@ -84,10 +73,8 @@ export default function Dashboard({navigation}) {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#FFDCBD',
+        backgroundColor: '#FFE9D6',
         flex: 1,
-
-
     },
 
     perfil: {
@@ -119,13 +106,13 @@ const styles = StyleSheet.create({
     nome: {
         fontFamily: 'Montserrat_700Bold',
         fontSize: 40,
-        color: '#FE7C2C',
+        color: '#82382E',
     },
 
     level: {
         fontFamily: 'Montserrat_400Regular',
         fontSize: 20,
-        color: '#FE7C2C',
+        color: '#82382E',
 
     },
 
@@ -156,6 +143,10 @@ const styles = StyleSheet.create({
         paddingVertical: '7%',
         paddingHorizontal: '4%',
         borderRadius: 20,
+        shadowColor: '#000000',
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 4,
     },
 
     squareTitles: {

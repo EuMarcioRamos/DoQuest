@@ -8,7 +8,7 @@ export default function TelaInicial({navigation}) {
 
       <View style={styles.imageContainer}>
         <Image 
-          source={require('../assets/paginaInicial.png')}
+          source={require('../../assets/paginaInicial.png')}
           style={styles.image} 
         />
       </View>
@@ -23,8 +23,8 @@ export default function TelaInicial({navigation}) {
         </Text>
 
         <Pressable 
-        style={styles.botaoIniciar}
-        onPress={() => navigation.navigate('Dashboard')}
+          style={styles.botaoIniciar}
+          onPress={() => navigation.navigate('Main')}
         >
           <Text style={styles.iniciar}>Começar</Text>
         </Pressable>

@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { useFonts, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
+import SelectableButton from '../SelectableButton';
 
 const MODES = [
   { key: 'rotina', label: 'Rotina' },
@@ -7,26 +7,22 @@ const MODES = [
 ];
 
 export default function TaskModeSwitch({ mode, onChange }) {
-  const [fontsLoaded] = useFonts({
-    Montserrat_700Bold,
-  });
-
-  if (!fontsLoaded) return null;
 
   return (
     <View style={styles.wrapper}>
       {MODES.map((item) => {
         const isActive = item.key === mode;
         return (
-          <Pressable
+          <SelectableButton
             key={item.key}
+            selected={isActive}
             onPress={() => onChange(item.key)}
-            style={[styles.button, isActive ? styles.activeButton : styles.inactiveButton]}
+            style={styles.button}
           >
             <Text style={[styles.label, isActive ? styles.activeLabel : styles.inactiveLabel]}>
               {item.label}
             </Text>
-          </Pressable>
+          </SelectableButton>
         );
       })}
     </View>
@@ -35,16 +31,16 @@ export default function TaskModeSwitch({ mode, onChange }) {
 
 const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: '#FE7C2C',
     borderRadius: 24,
-    padding: 14,
+    padding: 15,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    alignItems:'center',
     gap: 12,
   },
   button: {
     flex: 1,
     borderRadius: 30,
+    height: 70,
     paddingVertical: 10,
     alignItems: 'center',
     justifyContent: 'center',
@@ -55,19 +51,19 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   activeButton: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#E3700C',
   },
   inactiveButton: {
-    backgroundColor: '#E3700C',
+    backgroundColor: '#FFF',
   },
   label: {
     fontFamily: 'Montserrat_700Bold',
     fontSize: 18,
   },
   activeLabel: {
-    color: '#E3700C',
+    color: '#FFF',
   },
   inactiveLabel: {
-    color: '#FFFFFF',
+    color: '#E3700C',
   },
 });

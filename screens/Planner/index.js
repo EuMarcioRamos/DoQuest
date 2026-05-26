@@ -1,26 +1,18 @@
 import {StyleSheet, Text, View, FlatList, Pressable} from 'react-native';
 import { useState } from 'react';
-import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
+
 import Feather from '@expo/vector-icons/Feather'; 
-import RoundedBottomMenu from '../components/RoundedBottomMenu';
+import TaskCard from '../../components/TaskCard';
+import SelectableButton from '../../components/SelectableButton';
+import TasksWireframe from '../TaskWireframe';
+import { MOCK_TASKS, dias } from '../../data';
+
 
 export default function Planner({navigation}){
 
     const[diaSelecionado, setDiaSelecionado] = useState(1);
 
-    const [fontsLoaded] = useFonts ({
-        Montserrat_400Regular,
-        Montserrat_700Bold
-    });
 
-    if (!fontsLoaded) return null;
-
-    const dias = 
-    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-     11, 12, 13, 14, 15, 16, 17, 18,
-     19, 20, 21, 22, 23, 24, 25, 26,
-     27, 28, 29, 30   
-    ];
 
     return(
         <View style={styles.container}>
@@ -54,13 +46,14 @@ export default function Planner({navigation}){
                         const selecionado = item === diaSelecionado;
 
                         return(
-                            <Pressable 
+                            <SelectableButton 
+                                selected={selecionado}
                                 onPress={() => setDiaSelecionado(item)}
-                                style={[styles.cardData, selecionado && styles.cardSelecionado]}
+                                style={styles.cardData}
                             >
                                 <Text style={[styles.textDay, selecionado && styles.textDaySelecionado]}>DIA</Text>
                                 <Text style={[styles.textData, selecionado && styles.textDataSelecionado]}>{item}</Text>
-                            </Pressable>
+                            </SelectableButton>
                         )
 
                     }}
@@ -69,27 +62,22 @@ export default function Planner({navigation}){
             <View style={styles.section}>
                 <Text style={styles.titleAndamento}>Em andamento</Text>
                 <View style={styles.tarefas}>
-                    <View style={styles.tarefaTime}>
-                        <Text style={styles.textTime}>10:00 AM</Text>
-                        <Text style={styles.textTime}>11:00 AM</Text>
-                    </View>
+    
                     <View style={styles.cardTarefa}>
-                        <View style={styles.titleXp}>
-                            <Text style={styles.titleTarefa}>Banco de dados</Text>
-                            <Text style={styles.titleTarefa}>100 xp</Text>
-                        </View>
-                        <View style={styles.tarefaDesc}>
-                            <Text style={styles.tarefaType}>Estudos</Text>
-                        </View>
+                        {MOCK_TASKS.map((task) => (
+                            <TaskCard
+                                key={task.id}
+                                title={task.title}
+                                category={task.category}
+                                start={task.start}
+                                end={task.end}
+                            />
+                        ))}
                     </View>
                 </View>
             </View>
 
-            <RoundedBottomMenu
-                onHome={() => navigation.navigate('Dashboard')}
-                onNote={() => navigation.navigate('Planner')}
-                onUser={() => navigation.navigate('TasksWireframe')}
-            />
+            
 
         </View>
     )
@@ -98,7 +86,7 @@ export default function Planner({navigation}){
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FFDCBD',
+        backgroundColor: '#FFE9D6',
         paddingTop:70,
         gap: 20
     },
@@ -128,7 +116,7 @@ const styles = StyleSheet.create({
     },
 
     calendar: {
-        gap:220
+        
     },
 
     flatList: {
@@ -140,12 +128,7 @@ const styles = StyleSheet.create({
         paddingHorizontal:15,
         minWidth: 90,
         paddingVertical: 35,
-        backgroundColor: '#fff',
         borderRadius:40
-    },
-
-    cardSelecionado: {
-        backgroundColor: '#E3700C'
     },
 
     textDay: {
@@ -187,8 +170,6 @@ const styles = StyleSheet.create({
     },
 
     tarefas: {
-        flexDirection: 'row',
-
     },
 
     tarefaTime: {
@@ -203,12 +184,9 @@ const styles = StyleSheet.create({
 
     cardTarefa: {
         marginLeft: 20,
-        paddingVertical: 10,
-        paddingHorizontal: 10,
-        flex: 1,
-        height:100,
-        borderRadius: 10,
-        backgroundColor: '#E3700C'
+        marginRight: 20,
+        gap: 20,
+        
     },
 
     titleXp: {

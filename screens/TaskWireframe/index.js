@@ -1,45 +1,16 @@
 import Feather from '@expo/vector-icons/Feather';
 import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { useFonts, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 
-import RoundedBottomMenu from '../components/RoundedBottomMenu';
-import TaskModeSwitch from '../components/TaskModeSwitch';
-import TaskScheduleCard from '../components/TaskScheduleCard';
-import WeekdayPills from '../components/WeekdayPills';
+import TaskModeSwitch from '../../components/TaskModeSwitch';
+import TaskScheduleCard from '../../components/TaskScheduleCard';
+import WeekdayPills from '../../components/WeekdayPills';
+import { MOCK_TASKS } from '../../data';
 
-const MOCK_TASKS = [
-  {
-    id: '1',
-    title: 'Banco de dados',
-    category: 'Estudos',
-    start: '10:00 AM',
-    end: '11:00 AM',
-  },
-  {
-    id: '2',
-    title: 'Peito e tríceps',
-    category: 'Esportes',
-    start: '14:00 PM',
-    end: '13:00 PM',
-  },
-  {
-    id: '3',
-    title: 'Mobile',
-    category: 'Estudos',
-    start: '15:00 PM',
-    end: '16:00 PM',
-  },
-];
 
 export default function TasksWireframe({ navigation }) {
   const [mode, setMode] = useState('rotina');
   const [selectedDay, setSelectedDay] = useState(0);
-  const [fontsLoaded] = useFonts({
-    Montserrat_700Bold,
-  });
-
-  if (!fontsLoaded) return null;
 
   return (
     <View style={styles.container}>
@@ -67,6 +38,7 @@ export default function TasksWireframe({ navigation }) {
               start={task.start}
               end={task.end}
               onEdit={() => console.log('editar', task.id)}
+              style={styles.fullWidthCard}
             />
           ))}
         </View>
@@ -76,11 +48,7 @@ export default function TasksWireframe({ navigation }) {
         <Feather name="plus" size={28} color="#E3700C" />
       </Pressable>
 
-      <RoundedBottomMenu
-        onHome={() => navigation.navigate('Dashboard')}
-        onNote={() => navigation.navigate('Planner')}
-        onUser={() => navigation.navigate('TasksWireframe')}
-      />
+
     </View>
   );
 }
@@ -89,6 +57,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFE9D6',
+    paddingTop:30
   },
   content: {
     paddingHorizontal: 14,
@@ -125,6 +94,9 @@ const styles = StyleSheet.create({
   },
   tasksList: {
     gap: 12,
+  },
+  fullWidthCard: {
+    flex: 1
   },
   floatingButton: {
     position: 'absolute',
