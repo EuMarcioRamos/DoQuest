@@ -1,9 +1,11 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import SelectableButton from '../SelectableButton';
 
+import {weekDays} from '../../data/index'
+
 export default function WeekdayPills({ selectedDay, onSelectDay }) {
 
-  const weekDays = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
+  
 
   return (
     <View style={styles.row}>

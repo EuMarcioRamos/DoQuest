@@ -1,5 +1,8 @@
 import {StyleSheet, Text, View, FlatList, Pressable} from 'react-native';
 import { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 
 import Feather from '@expo/vector-icons/Feather'; 
 import TaskCard from '../../components/TaskCard';
@@ -12,6 +15,17 @@ export default function Planner({navigation}){
 
     const[diaSelecionado, setDiaSelecionado] = useState(1);
 
+    const [tasks, setTasks] = useState([]);
+
+    useFocusEffect(
+        useCallback(() => {
+            async function carregarTasks() {
+                const list = await AsyncStorage.getItem('task');
+                setTasks(list ? JSON.parse(list) : []);
+            }
+            carregarTasks();
+        }, [])
+    );
 
 
     return(
@@ -64,7 +78,7 @@ export default function Planner({navigation}){
                 <View style={styles.tarefas}>
     
                     <View style={styles.cardTarefa}>
-                        {MOCK_TASKS.map((task) => (
+                        {tasks.map((task) => (
                             <TaskCard
                                 key={task.id}
                                 title={task.title}

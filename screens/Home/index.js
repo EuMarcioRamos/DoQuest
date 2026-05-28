@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable} from 'react-native'
+import { StyleSheet, Text, View} from 'react-native'
 import Feather from '@expo/vector-icons/Feather';   
 
 

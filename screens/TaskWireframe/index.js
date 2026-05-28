@@ -1,6 +1,9 @@
 import Feather from '@expo/vector-icons/Feather';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 
 import TaskModeSwitch from '../../components/TaskModeSwitch';
 import TaskScheduleCard from '../../components/TaskScheduleCard';
@@ -11,6 +14,18 @@ import { MOCK_TASKS } from '../../data';
 export default function TasksWireframe({ navigation }) {
   const [mode, setMode] = useState('rotina');
   const [selectedDay, setSelectedDay] = useState(0);
+  const [tasks, setTasks] = useState([]);
+
+  useFocusEffect(
+      useCallback(() => {
+          async function carregarTasks() {
+              const list = await AsyncStorage.getItem('task');
+              setTasks(list ? JSON.parse(list) : []);
+          }
+          carregarTasks();
+      }, [])
+  );
+
 
   return (
     <View style={styles.container}>
@@ -30,7 +45,7 @@ export default function TasksWireframe({ navigation }) {
         </View>
 
         <View style={styles.tasksList}>
-          {MOCK_TASKS.map((task) => (
+          {tasks.map((task) => (
             <TaskScheduleCard
               key={task.id}
               title={task.title}
@@ -44,7 +59,7 @@ export default function TasksWireframe({ navigation }) {
         </View>
       </ScrollView>
 
-      <Pressable style={styles.floatingButton} onPress={() => console.log('nova tarefa')}>
+      <Pressable style={styles.floatingButton} onPress={() => navigation.navigate('AddTask')}>
         <Feather name="plus" size={28} color="#E3700C" />
       </Pressable>
 
